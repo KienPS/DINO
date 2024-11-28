@@ -30,6 +30,7 @@ from util.misc import NestedTensor, clean_state_dict, is_main_process
 from .position_encoding import build_position_encoding
 from .convnext import build_convnext
 from .swin_transformer import build_swin_transformer
+from .yolo import build_yolo
 
 
 
@@ -164,7 +165,10 @@ def build_backbone(args):
     backbone_freeze_keywords = args.backbone_freeze_keywords
     use_checkpoint = getattr(args, 'use_checkpoint', False)
 
-    if args.backbone in ['resnet50', 'resnet101']:
+    if args.backbone == 'yolo':
+        backbone = build_yolo(args.yolo_model)
+        bb_num_channels = backbone.num_channels
+    elif args.backbone in ['resnet50', 'resnet101']:
         backbone = Backbone(args.backbone, train_backbone, args.dilation,   
                                 return_interm_indices,   
                                 batch_norm=FrozenBatchNorm2d)
