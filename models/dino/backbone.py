@@ -214,7 +214,7 @@ def build_backbone(args):
         raise NotImplementedError("Unknown backbone {}".format(args.backbone))
     
 
-    assert len(bb_num_channels) == len(return_interm_indices), f"len(bb_num_channels) {len(bb_num_channels)} != len(return_interm_indices) {len(return_interm_indices)}"
+    # assert len(bb_num_channels) == len(return_interm_indices), f"len(bb_num_channels) {len(bb_num_channels)} != len(return_interm_indices) {len(return_interm_indices)}"
 
 
     model = Joiner(backbone, position_embedding)

@@ -8,6 +8,7 @@ from util.misc import NestedTensor
 
 class YOLOBackbone(nn.Module):
     def __init__(self, backbone: nn.Module, num_channels: list[int]):
+        super().__init__()
         self.num_channels = num_channels
         self.body = IntermediateLayerGetter(backbone, return_layers={'4': '0', '6': '1', '10': '2'})
 
