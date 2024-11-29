@@ -612,21 +612,21 @@ def get_aux_target_hacks_list(image_set, args):
 def build(image_set, args):
     root = Path(args.coco_path)
     mode = 'instances'
-    # PATHS = {
-    #     "train": (root / "train2017", root / "annotations" / f'{mode}_train2017.json'),
-    #     "train_reg": (root / "train2017", root / "annotations" / f'{mode}_train2017.json'),
-    #     "val": (root / "val2017", root / "annotations" / f'{mode}_val2017.json'),
-    #     "eval_debug": (root / "val2017", root / "annotations" / f'{mode}_val2017.json'),
-    #     "test": (root / "test2017", root / "annotations" / 'image_info_test-dev2017.json' ),
-    # }
-
     PATHS = {
-        "train": (root / "train", root / "annotations" / f'train.json'),
-        "train_reg": (root / "train", root / "annotations" / f'train.json'),
-        "val": (root / "val", root / "annotations" / f'val.json'),
-        "eval_debug": (root / "val", root / "annotations" / f'val.json'),
-        "test": (root / "test", root / "annotations" / 'test.json'),
+        "train": (root / "train2017", root / "annotations" / f'{mode}_train2017.json'),
+        "train_reg": (root / "train2017", root / "annotations" / f'{mode}_train2017.json'),
+        "val": (root / "val2017", root / "annotations" / f'{mode}_val2017.json'),
+        "eval_debug": (root / "val2017", root / "annotations" / f'{mode}_val2017.json'),
+        "test": (root / "test2017", root / "annotations" / 'image_info_test-dev2017.json' ),
     }
+    if args.backbone == 'yolo':
+        PATHS = {
+            "train": (root / "train", root / "annotations" / f'train.json'),
+            "train_reg": (root / "train", root / "annotations" / f'train.json'),
+            "val": (root / "val", root / "annotations" / f'val.json'),
+            "eval_debug": (root / "val", root / "annotations" / f'val.json'),
+            "test": (root / "test", root / "annotations" / 'test.json'),
+        }
 
     # add some hooks to datasets
     aux_target_hacks_list = get_aux_target_hacks_list(image_set, args)
@@ -641,7 +641,7 @@ def build(image_set, args):
     except:
         strong_aug = False
     dataset = CocoDetection(img_folder, ann_file, 
-            transforms=make_coco_transforms(image_set, fix_size=args.fix_size, strong_aug=strong_aug, args=args), 
+            transforms=None,#make_coco_transforms(image_set, fix_size=args.fix_size, strong_aug=strong_aug, args=args), 
             return_masks=args.masks,
             aux_target_hacks=aux_target_hacks_list,
         )
