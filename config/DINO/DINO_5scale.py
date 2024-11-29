@@ -1,6 +1,6 @@
 _base_ = ['coco_transformer.py']
 
-num_classes=91
+num_classes=8
 
 lr = 0.0001
 param_dict_type = 'default'
@@ -22,7 +22,8 @@ lr_drop_list = [33, 45]
 
 modelname = 'dino'
 frozen_weights = None
-backbone = 'resnet50'
+backbone = 'yolo'
+yolo_model = 'yolo11n.pt'
 use_checkpoint = False
 
 dilation = False
@@ -100,7 +101,7 @@ dn_number = 100
 dn_box_noise_scale = 0.4
 dn_label_noise_ratio = 0.5
 embed_init_tgt = True
-dn_labelbook_size = 91
+dn_labelbook_size = 8
 
 match_unstable_error = True
 
